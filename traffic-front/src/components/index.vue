@@ -20,7 +20,7 @@
               <el-input type="text" v-model="registerForm.phone"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+              <el-button type="primary" @click="submitRegister(registerForm)">注册</el-button>
               <el-button @click="resetForm('registerForm')">重置</el-button>
             </el-form-item>
           </el-form>
@@ -66,7 +66,7 @@
     </el-header>
 
     <el-main>
-      
+
     </el-main>
 
     <el-footer>
@@ -169,15 +169,12 @@ export default {
       this.dialogLogonVisible = true;
     },
 
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
+    submitRegister(formName) {
+      this.$ajax.post("/traffic/register",{formName},r=>{
+        this.dialogRegisterVisible = false;
+      },r=>{
+
+      })
     },
 
     resetForm(formName) {
@@ -200,7 +197,7 @@ export default {
   }
 
   .registerButton{
-    margin-left:72rem
+    margin-left:108rem;
   }
 
   .menu{

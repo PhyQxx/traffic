@@ -15,6 +15,16 @@ public class trafficServiceImpl implements trafficService {
     trafficMapper trafficMapper;
 
     @Override
+    public Map<String, Object> register(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<>();
+        int res = 0;
+        res = trafficMapper.userRegister(param);
+        result.put("success",true);
+        result.put("data",res);
+        return result;
+    }
+
+    @Override
     public Map<String, Object> getUser() {
         Map<String,Object> result = new HashMap<>();
         List<Map<String,Object>> res = trafficMapper.getUser();

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.traffic.dao.trafficMapper">
+    <insert id="userRegister" parameterType="map">
+        insert into traffic_user(user_id,user_name,user_password,user_phone)
+        values
+        (
+        uuid(),
+        #{formName.name},
+        #{formName.pass},
+        #{formName.phone}
+        )
+    </insert>
     <select id="getUser" parameterType="map" resultType="map">
         select * from traffic_user
     </select>

@@ -18,10 +18,24 @@ public class trafficController {
     @Autowired
     trafficService trafficService;
 
-    //登录验证
+    /**用户注册**/
+    @RequestMapping(value = "/register", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> register(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = null;
+        try {
+            result = trafficService.register(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    /**登录验证*/
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public Map<String,Object> hello(@RequestBody Map<String,Object> param) {
+    public Map<String,Object> login(@RequestBody Map<String,Object> param) {
         Map<String,Object> result = new HashMap<>();
         result = trafficService.getUser();
         return result;
