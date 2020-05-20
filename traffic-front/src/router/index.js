@@ -13,7 +13,7 @@ export default new Router({
         {
           path: 'homepage',
           name: 'homepage',
-          
+
           component:() => import('@/components/Homepage')
         },
         {
@@ -50,11 +50,6 @@ export default new Router({
           path: 'guide',
           name: 'guide',
           component:() => import('@/components/Guide')
-        },
-        {
-          path: 'background',
-          name: 'background',
-          component:() => import('@/components/Background')
         }
       ]
     }

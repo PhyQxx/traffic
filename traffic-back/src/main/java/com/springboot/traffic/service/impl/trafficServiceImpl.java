@@ -18,7 +18,11 @@ public class trafficServiceImpl implements trafficService {
     public Map<String, Object> register(Map<String, Object> param) {
         Map<String,Object> result = new HashMap<>();
         int res = 0;
-        res = trafficMapper.userRegister(param);
+        try {
+            res = trafficMapper.userRegister(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         result.put("success",true);
         result.put("data",res);
         return result;

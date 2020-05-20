@@ -59,7 +59,6 @@
           </el-submenu>
           <el-menu-item index="/index/leave">在线留言</el-menu-item>
           <el-menu-item index="/index/guide">办事指南</el-menu-item>
-          <el-menu-item index="/index/background">后台管理</el-menu-item>
         </el-menu>
       </div>
       <router-view/>
@@ -169,9 +168,18 @@ export default {
       this.dialogLogonVisible = true;
     },
 
+    //用户注册
     submitRegister(formName) {
       this.$ajax.post("/traffic/register",{formName},r=>{
-        this.dialogRegisterVisible = false;
+        if(r===1){
+          this.dialogRegisterVisible = false;
+          this.$message({
+            message: '注册成功！',
+            type: 'success'
+          });
+        } else{
+          this.$message.error('用户名已存在！');
+        }
       },r=>{
 
       })
