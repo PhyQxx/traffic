@@ -33,11 +33,15 @@ public class trafficController {
 
 
     /**登录验证*/
-    @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/logon", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public Map<String,Object> login(@RequestBody Map<String,Object> param) {
         Map<String,Object> result = new HashMap<>();
-        result = trafficService.getUser();
+        try {
+            result = trafficService.getUser(param);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
 

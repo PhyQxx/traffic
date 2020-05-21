@@ -37,7 +37,7 @@
               <el-input type="password" v-model="logonForm.pass"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('logonForm')">登录</el-button>
+              <el-button type="primary" @click="submitLogon(logonForm)">登录</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -181,7 +181,14 @@ export default {
           this.$message.error('用户名已存在！');
         }
       },r=>{
+        this.$message.error('注册失败！');
+      })
+    },
 
+    //用户登录
+    submitLogon(formName){
+      this.$ajax.post("/traffic/logon",{formName},r=>{
+        debugger
       })
     },
 
@@ -210,6 +217,6 @@ export default {
 
   .menu{
     height:4rem;
-    width:100%
+    width: %
   }
 </style>
