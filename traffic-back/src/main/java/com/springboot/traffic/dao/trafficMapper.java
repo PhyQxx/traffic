@@ -22,5 +22,34 @@ public interface trafficMapper {
      */
     List<Map<String, Object>> getUser(Map<String, Object> param);
 
+    /**
+     * 获取信息公告
+     */
+    List<Map<String,Object>> getSchoolNotice(Map<String,Object> param);
 
+    /**
+     * 获取交通资讯
+     */
+    List<Map<String,Object>> getParentAdvice(Map<String,Object> param);
+
+    /**
+     * 获取警示教育
+     */
+    List<Map<String,Object>> getStudentThinking(Map<String,Object> param);
+
+    List<Map<String, Object>> illegalTreatment(Map<String, Object> param);
+
+    int handle(Map<String, Object> param);
+
+    List<Map<String, Object>> getIllegalInfo(Map<String, Object> param);
+
+    List<Map<String, Object>> getScrapInfo(Map<String, Object> param);
+
+    int insertPlateInfo(Map<String, Object> param);
+
+    List<Map<String, Object>> selectPlateInfo(Map<String, Object> param);
+
+    List<Map<String, Object>> getLeaveMessage(Map<String, Object> param);
+
+    int insertLeaveMessage(Map<String, Object> param);
 }

@@ -1,3 +1,17 @@
 html{
-  overflow-x: hidden;
+  height: 100%;
+  overflow-y: overlay;
+}
+body{
+  height: 100%;
+  padding-right: 17px!important;
+}
+.pointer{
+  cursor: pointer;
+}
+.them-blue{
+  color: #409EFF;
+}
+.special-them-blue:hover{
+  color: #409EFF;
 }

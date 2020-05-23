@@ -73,6 +73,9 @@
 </script>
 
 <style>
+  .guide{
+    margin-top: 1.5rem;
+  }
   .el-tree {
     width: 10rem;
   }

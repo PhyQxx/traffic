@@ -22,55 +22,97 @@
           </el-carousel-item>
         </el-carousel>
     </div>
-    <div class="gridTitle">
-      <div class="announce">信息公告<br>—————————————————————</div>
-      <div class="information">交通资讯<br>—————————————————————</div>
-      <div class="information">警示教育<br>—————————————————————</div>
+    <div class="tab">
+      <div class="one">
+        <div class="title">信息公告</div>
+        <div class="list">
+          <div class="list-one pointer special-them-blue" v-for="item in newestNotice" @click="getContent(item)">
+            {{item.title}}
+          </div>
+        </div>
+      </div>
+      <div class="one">
+        <div class="title">交通资讯</div>
+        <div class="list">
+          <div class="list-one pointer special-them-blue"  v-for="item in goodAdvice" @click="getContent(item)">
+            {{item.title}}
+          </div>
+        </div>
+      </div>
+      <div class="one">
+        <div class="title">警示教育</div>
+        <div class="list">
+          <div class="list-one pointer special-them-blue"  v-for="item in magicalThinking" @click="getContent(item)">
+            {{item.title}}
+          </div>
+        </div>
+      </div>
     </div>
-    <el-row :gutter="60" class="gridContent">
-      <el-col :span="8" class="grid-first">
-        <div class="grid-content">
-          <el-link href="">机动车号牌旧牌未收回作废公告</el-link><br/>
-          <el-link href="">机动车登记证书旧证书未收回作废公告</el-link><br/>
-          <el-link href="">机动车号牌未收回作废公告</el-link><br/>
-        </div>
-      </el-col>
-      <el-col :span="8" class="grid-second">
-        <div class="grid-content">
-          <el-link href="">5月9日至5月15日出行提示</el-link><br/>
-          <el-link href="">关于对本市部分检测场因降雨暂停验车的通知</el-link><br/>
-          <el-link href="">疫情期间未按时验车会被处罚吗？</el-link><br/>
-        </div>
-      </el-col>
-      <el-col :span="8" class="grid-other">
-        <div class="grid-content">
-          <el-link href="">我怎么多了几起违法记录？不是我开的呀！</el-link><br/>
-          <el-link href="">12万快递小哥同上“交通安全课”</el-link><br/>
-          <el-link href="">“车辆进入东城区××停车场”，车主：我在家呢啊！</el-link><br/>
-        </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
   export default{
+    data() {
+      return{
+        newestNotice: [],
+        goodAdvice: [],
+        magicalThinking: []
+      }
+    },
     mounted() {
-      this.getName();
+      this.getAll();
     },
     methods:{
-      getName() {
-        this.$ajax.post("/traffic/login",{},r=>{
-          console.log(r)
+      getAll() {
+        this.$ajax.post("/traffic/getAllContent",{},r=>{
+          this.newestNotice = r.schoolNoticeList.slice(0,6);
+          this.goodAdvice = r.parentAdvice.slice(0,6);
+          this.magicalThinking = r.studentThinking.slice(0,6);
         })
+      },
+      getContent(one) {
+        this.$router.push({
+          name: 'noticecontent'
+        });
+        sessionStorage.setItem("noticeContent",JSON.stringify(one));
       }
     }
     }
 </script>
 
 <style>
+  .one .title{
+    padding: 1rem;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .one .list{
+    padding: 0.5rem 1rem 1rem 1rem;
+  }
+  .list .list-one{
+    height: 2rem;
+    line-height: 2rem;
+  }
+  .tab{
+    display: flex;
+    width: 80%;
+    margin: 1rem auto;
+  }
+  .tab .one{
+    border-radius: 5px;
+    flex: 1;
+    background: #FFFFFF;
+  }
+  .tab .one:nth-child(2){
+    margin: 0 1rem;
+  }
   .change {
-    margin-top: 4rem;
+    border-radius: 5px;
+    padding-top: 3rem;
+    background: #fff;
+    margin-top: 1.5rem;
   }
   .el-carousel {
     width: 90rem;

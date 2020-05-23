@@ -2,11 +2,16 @@
   <el-container>
     <el-header>
       <div class = 'header'>
-
-        <el-button class="registerButton" type="text" @click='userRegister'>用户注册</el-button>
-
+        <div class="login" v-if="!isLogin">
+          <div class="registerButton pointer" @click='userRegister'>用户注册</div>
+          <div class="pointer" @click='userLogon'>个人登录</div>
+        </div>
+        <div class="is-login" v-if="isLogin">
+          <div class="personal pointer">{{userInfo === '' ? '' : userInfo.real_name}}</div>
+          <div class="pointer" @click="cancellation">注销</div>
+        </div>
         <el-dialog :visible.sync='dialogRegisterVisible' width="600px" height="400px">
-          <el-form :model="registerForm" :rules="registerRules" ref="registerForm" label-width="100px">
+          <el-form :model="registerForm" label-position="left" :rules="registerRules" ref="registerForm" label-width="100px">
             <el-form-item label="用户名" prop="name">
               <el-input type="text" v-model="registerForm.name"></el-input>
             </el-form-item>
@@ -25,11 +30,8 @@
             </el-form-item>
           </el-form>
         </el-dialog>
-
-        <el-button type="text" @click='userLogon'>个人登录</el-button>
-
-        <el-dialog :visible.sync='dialogLogonVisible' width="400px" height="300px">
-          <el-form :model="logonForm" :rules="logonRules" ref="logonForm" label-width="100px">
+        <el-dialog :visible.sync='dialogLogonVisible' width="600px" height="400px">
+          <el-form :model="logonForm" label-position="left" :rules="logonRules" ref="logonForm" label-width="100px">
             <el-form-item label="用户名" prop="name">
               <el-input type="text" v-model="logonForm.name"></el-input>
             </el-form-item>
@@ -37,7 +39,7 @@
               <el-input type="password" v-model="logonForm.pass"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitLogon(logonForm)">登录</el-button>
+              <el-button type="primary" @click="submitLogon()">登录</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -48,8 +50,8 @@
           <el-menu-item index="/index/homepage">首页</el-menu-item>
           <el-submenu index="2">
             <template slot="title">业务中心</template>
-            <el-menu-item index="/index/illprocess">违章处理业务</el-menu-item>
-            <el-menu-item index="/index/illquery">违章信息查询</el-menu-item>
+            <el-menu-item index="/index/illquery">机动车违章信息查询</el-menu-item>
+            <el-menu-item index="/index/illprocess">机动车违章处理业务</el-menu-item>
             <el-menu-item index="/index/disquery">机动车报废查询</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
@@ -61,17 +63,11 @@
           <el-menu-item index="/index/guide">办事指南</el-menu-item>
         </el-menu>
       </div>
-      <router-view/>
     </el-header>
-
     <el-main>
-
+      <router-view/>
     </el-main>
-
-    <el-footer>
-
-    </el-footer>
-
+    <el-footer></el-footer>
   </el-container>
 </template>
 
@@ -117,9 +113,10 @@ export default {
     };
 
     return {
+      isLogin: false,
+      userInfo: '',
       dialogRegisterVisible:false,
       dialogLogonVisible:false,
-
       registerForm: {
         name:'',
         pass: '',
@@ -157,9 +154,37 @@ export default {
       }
     };
   },
-
+  mounted() {
+    this.isLogin1();
+  },
   methods: {
-
+    cancellation() {
+      this.$confirm('确认注销？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        sessionStorage.setItem("userInfo",'');
+        this.$message({
+          type: 'success',
+          message: '注销成功'
+        });
+        location.reload()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消注销'
+        });
+      });
+    },
+    isLogin1() {
+      if (sessionStorage.getItem("userInfo") === '') {
+        this.isLogin = false;
+      } else {
+        this.isLogin = true;
+        this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+      }
+    },
     userRegister(){
       this.dialogRegisterVisible = true;
     },
@@ -186,9 +211,12 @@ export default {
     },
 
     //用户登录
-    submitLogon(formName){
-      this.$ajax.post("/traffic/logon",{formName},r=>{
-        debugger
+    submitLogon(){
+      this.$ajax.post("/traffic/logon",{name:this.logonForm.name,pass:this.logonForm.pass},r=>{
+        sessionStorage.setItem("userInfo",JSON.stringify(r[0]));
+        this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        this.dialogLogonVisible = false;
+        this.isLogin = true;
       })
     },
 
@@ -201,8 +229,28 @@ export default {
 </script>
 
 <style>
+  .el-input {
+    width: 100%;
+  }
+  .personal{
+    margin-right: 1rem;
+  }
+  .el-form{
+    width: 100% !important;
+  }
+  .el-dialog__body{
+    padding: 3rem 5rem!important;
+  }
+  .login, .is-login{
+    display: flex;
+    float: right;
+    color: #999999;
+  }
+  .el-main div{
+    border-radius: 5px;
+  }
   .el-container{
-    height:50rem;
+    min-height: 100%;
     background: linear-gradient(#cee6e6, #f4fafa)
   }
 
@@ -212,11 +260,11 @@ export default {
   }
 
   .registerButton{
-    margin-left:108rem;
+    margin-right: 1rem;
   }
 
   .menu{
     height:4rem;
-    width: %
+
   }
 </style>

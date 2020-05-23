@@ -8,13 +8,19 @@ export default new Router({
     {
       path: '/index',
       name: 'index',
-      component:() => import('@/components/index'),
+      component:() => import('@/components/Index'),
       children:[
         {
           path: 'homepage',
           name: 'homepage',
 
           component:() => import('@/components/Homepage')
+        },
+        {
+          path: 'noticecontent',
+          name: 'noticecontent',
+
+          component:() => import('@/components/NoticeContent')
         },
         {
           path: 'illprocess',

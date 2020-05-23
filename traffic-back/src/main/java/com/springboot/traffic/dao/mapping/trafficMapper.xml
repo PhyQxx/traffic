@@ -12,9 +12,128 @@
         #{formName.phone}
         )
     </insert>
+
     <!--用户登录-->
     <select id="getUser" parameterType="map" resultType="map">
-        select * from traffic_user where user_name = #{formName.name} and user_password = #{formName.pass}
+        select * from traffic_user where user_name = #{name} and user_password = #{pass}
     </select>
 
+    <select id="getSchoolNotice" parameterType="map" resultType="map">
+        SELECT
+        n.id,
+        title,
+        content,
+        user_id,
+        real_name,
+        create_time
+        FROM
+        traffic_notice	n left join traffic_user u on n.create_id = u.user_id
+        where type = '信息公告'
+        and status = "1"
+        <if test="id != null and id != ''">
+            and s.id = #{id}
+        </if>
+        <if test="type != null and type != ''">
+            and label = #{label}
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <!--获取家长建议-->
+    <select id="getParentAdvice" parameterType="map" resultType="map">
+        SELECT
+        n.id,
+        title,
+        content,
+        user_id,
+        real_name,
+        create_time
+        FROM
+        traffic_notice	n left join traffic_user u on n.create_id = u.user_id
+        where type = '交通资讯'
+        and status = "1"
+        <if test="id != null and id != ''">
+            and s.id = #{id}
+        </if>
+        <if test="type != null and type != ''">
+            and label = #{label}
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <!--获取学生想法-->
+    <select id="getStudentThinking" parameterType="map" resultType="map">
+        SELECT
+        n.id,
+        title,
+        content,
+        user_id,
+        real_name,
+        create_time
+        FROM
+        traffic_notice	n left join traffic_user u on n.create_id = u.user_id
+        where type = '警示教育'
+        and status = "1"
+        <if test="id != null and id != ''">
+            and s.id = #{id}
+        </if>
+        <if test="type != null and type != ''">
+            and label = #{label}
+        </if>
+        ORDER BY create_time desc
+    </select>
+    <select id="illegalTreatment" resultType="map" parameterType="map">
+        SELECT
+	    *
+        FROM
+        `traffic_illegal_info`
+        WHERE
+        number = #{number} and number_plate = #{numberPlate}
+        and engine_number = #{engine} and mobile = #{mobile}
+    </select>
+
+    <update id="handle" parameterType="map">
+        update traffic_illegal_info set status = '1' where id = #{id}
+    </update>
+
+    <select id="getIllegalInfo" resultType="map" parameterType="map">
+        SELECT
+        *
+        FROM
+        traffic_illegal_info
+        WHERE
+        plate_type = #{plateType} and number_plate = #{numberPlate}
+        and engine_number like CONCAT('%',#{engineNumber},'%')
+        and status = '0'
+    </select>
+
+    <select id="getScrapInfo" resultType="map" parameterType="map">
+        SELECT
+        *
+        FROM
+        traffic_scrap_info
+        WHERE
+        plate_type = #{plateType} and number_plate = #{numberPlate}
+        and engine_number like CONCAT('%',#{engineNumber},'%')
+    </select>
+
+    <insert id="insertPlateInfo" parameterType="map">
+        INSERT INTO traffic_plate_info ( id, create_id, create_time, plate_number, car_brand, qualified_no, car_size, car_type )
+        VALUES
+	    ( uuid(),#{createId},now(),#{plateNumber},#{carBrand},#{qualifiedNo},#{carSize},#{carType})
+    </insert>
+
+    <select id="selectPlateInfo" resultType="map" parameterType="map">
+        select * from traffic_plate_info left join traffic_user on create_id = user_id ORDER BY create_time desc
+    </select>
+
+    <select id="getLeaveMessage" resultType="map" parameterType="map">
+        SELECT * FROM `traffic_leave_message` left join traffic_user on create_id = user_id
+    </select>
+
+    <insert id="insertLeaveMessage" parameterType="map">
+        INSERT INTO traffic_leave_message ( id,content, create_id, create_time)
+        VALUES
+	    ( uuid(),#{content},#{createId},now())
+    </insert>
 </mapper>

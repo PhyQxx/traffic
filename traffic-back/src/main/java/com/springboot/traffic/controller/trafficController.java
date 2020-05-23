@@ -45,4 +45,67 @@ public class trafficController {
         return result;
     }
 
+    /**获取首页内容*/
+    @RequestMapping(value = "/getAllContent", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> getAllContent(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.getAllContent(param);
+        return result;
+    }
+
+    /**查询违章处理*/
+    @RequestMapping(value = "/illegalTreatment", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> illegalTreatment(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.illegalTreatment(param);
+        return result;
+    }
+
+    /**处理违章处理*/
+    @RequestMapping(value = "/handle", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> handle(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.handle(param);
+        return result;
+    }
+
+    /**查询违章信息*/
+    @RequestMapping(value = "/getIllegalInfo", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> getIllegalInfo(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.getIllegalInfo(param);
+        return result;
+    }
+
+    /**新增车辆挂牌*/
+    @RequestMapping(value = "/insertPlateInfo", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> insertPlateInfo(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.insertPlateInfo(param);
+        return result;
+    }
+
+    /**查询车辆挂牌信息*/
+    @RequestMapping(value = "/selectPlateInfo", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> selectPlateInfo(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.selectPlateInfo(param);
+        return result;
+    }
+
+    /**查询留言*/
+    @RequestMapping(value = "/getLeaveMessage", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> getLeaveMessage(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.getLeaveMessage(param);
+        return result;
+    }
+
+    /**查询留言*/
+    @RequestMapping(value = "/insertLeaveMessage", method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String,Object> insertLeaveMessage(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result = trafficService.insertLeaveMessage(param);
+        return result;
+    }
 }
