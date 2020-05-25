@@ -15,3 +15,8 @@ body{
 .special-them-blue:hover{
   color: #409EFF;
 }
+.over-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

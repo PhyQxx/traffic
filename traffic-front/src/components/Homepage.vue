@@ -26,7 +26,7 @@
       <div class="one">
         <div class="title">信息公告</div>
         <div class="list">
-          <div class="list-one pointer special-them-blue" v-for="item in newestNotice" @click="getContent(item)">
+          <div class="list-one pointer special-them-blue over-text" v-for="item in newestNotice" @click="getContent(item)">
             {{item.title}}
           </div>
         </div>
@@ -34,7 +34,7 @@
       <div class="one">
         <div class="title">交通资讯</div>
         <div class="list">
-          <div class="list-one pointer special-them-blue"  v-for="item in goodAdvice" @click="getContent(item)">
+          <div class="list-one pointer special-them-blue over-text"  v-for="item in goodAdvice" @click="getContent(item)">
             {{item.title}}
           </div>
         </div>
@@ -42,7 +42,7 @@
       <div class="one">
         <div class="title">警示教育</div>
         <div class="list">
-          <div class="list-one pointer special-them-blue"  v-for="item in magicalThinking" @click="getContent(item)">
+          <div class="list-one pointer special-them-blue over-text"  v-for="item in magicalThinking" @click="getContent(item)">
             {{item.title}}
           </div>
         </div>
@@ -92,6 +92,7 @@
     padding: 0.5rem 1rem 1rem 1rem;
   }
   .list .list-one{
+    width: 20rem;
     height: 2rem;
     line-height: 2rem;
   }

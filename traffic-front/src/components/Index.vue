@@ -7,7 +7,7 @@
           <div class="pointer" @click='userLogon'>个人登录</div>
         </div>
         <div class="is-login" v-if="isLogin">
-          <div class="personal pointer">{{userInfo === '' ? '' : userInfo.real_name}}</div>
+          <div class="personal pointer">{{username}}</div>
           <div class="pointer" @click="cancellation">注销</div>
         </div>
         <el-dialog :visible.sync='dialogRegisterVisible' width="600px" height="400px">
@@ -113,6 +113,7 @@ export default {
     };
 
     return {
+      username: '',
       isLogin: false,
       userInfo: '',
       dialogRegisterVisible:false,
@@ -178,11 +179,13 @@ export default {
       });
     },
     isLogin1() {
-      if (sessionStorage.getItem("userInfo") === '') {
+      if (sessionStorage.getItem("userInfo") === '' ||
+        sessionStorage.getItem("userInfo") === null) {
         this.isLogin = false;
       } else {
         this.isLogin = true;
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        this.username = JSON.parse(sessionStorage.getItem("userInfo")).real_name;
       }
     },
     userRegister(){
@@ -217,6 +220,7 @@ export default {
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
         this.dialogLogonVisible = false;
         this.isLogin = true;
+        this.username = JSON.parse(sessionStorage.getItem("userInfo")).real_name;
       })
     },
 
