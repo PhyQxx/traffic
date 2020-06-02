@@ -128,7 +128,7 @@
     </select>
 
     <select id="getLeaveMessage" resultType="map" parameterType="map">
-        SELECT * FROM `traffic_leave_message` left join traffic_user on create_id = user_id
+        SELECT * FROM `traffic_leave_message` left join traffic_user on create_id = user_id ORDER BY create_time desc
     </select>
 
     <insert id="insertLeaveMessage" parameterType="map">
